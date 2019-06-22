@@ -1,5 +1,9 @@
 import UIKit
 
+struct PlacesResponse : Decodable {
+    var places : [Place]
+}
+
 struct Place : Decodable {
     var name : String
     var latitude : Double
@@ -27,10 +31,14 @@ let json = """
 
 """.data(using: .utf8)!
 
-let placesDictionary = try! JSONDecoder().decode([String:[Place]].self, from: json)
-let places = placesDictionary["places"]
+let placesResponse = try! JSONDecoder().decode(PlacesResponse.self, from: json)
+print(placesResponse.places)
 
-print(places)
+
+//let placesDictionary = try! JSONDecoder().decode([String:[Place]].self, from: json)
+//let places = placesDictionary["places"]
+//
+//print(places)
 
 
     

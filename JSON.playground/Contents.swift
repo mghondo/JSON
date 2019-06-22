@@ -27,7 +27,10 @@ let json = """
 
 """.data(using: .utf8)!
 
-JSONDecoder().
+let placesDictionary = try! JSONDecoder().decode([String:[Place]].self, from: json)
+let places = placesDictionary["places"]
+
+print(places)
 
 
     

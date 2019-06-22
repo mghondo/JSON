@@ -4,43 +4,34 @@ struct Place : Decodable {
     var name : String
     var latitude : Double
     var longitude : Double
-    var vistited : Bool
+
 }
 
 let json = """
-[
+{
+    "places": [
     {
         "name" : "Costa Rica",
-        "latitude" : 23.45,
-        "longitude" : 45.23,
-        "vistited" : true
+        "latitude" : 34.56,
+        "longitude" : 65.67
     },
     {
-        "name" : "Puerto Rico",
-        "latitude" : 23,
-        "longitude" : 45,
-        "vistited" : true
-    },
-    {
-        "name" : "Mexico City",
-        "latitude" : 23,
-        "longitude" : 45,
-        "vistited" : true
-    },
-    {
-        "name" : "Iceland",
-        "latitude" : 23,
-        "longitude" : 45,
-        "vistited" : false
+        "name" : "Boston",
+        "latitude" : 134.56,
+        "longitude" : 265.67
     }
-]
+    
+    ]
+}
+
 
 """.data(using: .utf8)!
 
-let places = try! JSONDecoder().decode([Place].self , from: json)
+JSONDecoder().
 
-places[1].name
-print(places)
+
+    
+
 
 
 

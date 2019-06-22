@@ -1,6 +1,6 @@
 import UIKit
 
-struct Place {
+struct Place : Decodable {
     var name : String
     var latitude : Double
     var longitude : Double
@@ -14,19 +14,19 @@ let json = """
         "latitude" : 23.45,
         "longitude" : 45.23,
         "vistited" : true
-    }
+    },
     {
         "name" : "Puerto Rico",
         "latitude" : 23,
         "longitude" : 45,
         "vistited" : true
-    }
+    },
     {
         "name" : "Mexico City",
         "latitude" : 23,
         "longitude" : 45,
         "vistited" : true
-    }
+    },
     {
         "name" : "Iceland",
         "latitude" : 23,
@@ -36,6 +36,15 @@ let json = """
 ]
 
 """.data(using: .utf8)!
+
+let places = try! JSONDecoder().decode([Place].self , from: json)
+
+places[1].name
+print(places)
+
+
+
+
 
 
 

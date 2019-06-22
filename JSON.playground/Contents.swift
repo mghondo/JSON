@@ -1,5 +1,12 @@
 import UIKit
 
+struct Place {
+    var name : String
+    var latitude : Double
+    var longitude : Double
+    var vistited : Bool
+}
+
 let json = """
 [
     {

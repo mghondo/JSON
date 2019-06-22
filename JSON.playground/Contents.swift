@@ -1,6 +1,26 @@
 import UIKit
 
+struct Geo : Decodable {
+    var latitude : Double
+    var longitude : Double
+}
 
+struct Address : Decodable {
+    var street : String
+    var city : String
+    var state : String
+    var geo : Geo
+}
+
+struct Customer : Decodable {
+    var firstName : String
+    var lastName : String
+    var address : String
+}
+
+struct CustomerResponse : Decodable {
+    var customers : [Customer]
+}
 
 let json = """
 
@@ -16,13 +36,15 @@ let json = """
             "geo" : {
                 "latitude" : 34.56,
                 "longitude" : 35.65
+                }
             }
         }
-    }
-]
+    ]
 }
 
 """.data(using: .utf8)!
+
+
 
 
 

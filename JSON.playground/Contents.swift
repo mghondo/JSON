@@ -15,7 +15,7 @@ struct Address : Decodable {
 struct Customer : Decodable {
     var firstName : String
     var lastName : String
-    var address : String
+    var address : Address
 }
 
 struct CustomerResponse : Decodable {
@@ -44,6 +44,11 @@ let json = """
 
 """.data(using: .utf8)!
 
+let customersResponse = try! JSONDecoder().decode(CustomerResponse.self, from: json)
+
+
+print(customersResponse)
+print(customersResponse.customers[0].address.geo.latitude)
 
 
 

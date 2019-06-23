@@ -1,38 +1,48 @@
 import UIKit
 
-struct AnyDecodable : Decodable {
-    let value : Any
-    init<T>(_ value :T?) {
-        self.value = value ?? ()
+class Car : Decodable {
+    var make : String = ""
+    var model : String = ""
+    
+    
+    init() {
+  
+    }
+}
+
+class ElectricCar : Car {
+    var range : Double
+    var hasAutoPilot : Bool
+    
+    private enum CodingKeys : String, CodingKey {
+        case range = "range"
+        case hasAutoPilot = "hasAutoPilot"
     }
     
-    init(from decoder : Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        
-        if let string = try? container.decode(String.self) {
-            self.init(string)
-        } else if let int = try? container.decode(Int.self) {
-            self.init(int)
-        } else {
-            self.init(())
-        }
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.range = try container.decode(Double.self, forKey: .range)
+        self.hasAutoPilot = try container.decode(Bool.self, forKey: .hasAutoPilot)
+        try super.init(from: decoder)
     }
 }
 
 let json = """
 {
-    "foo" : "Hello",
-    "bar" : 123
+    "make" : "Tesla",
+    "model" : "Model X",
+    "range" : 400,
+    "hasAutoPilot" : true
 }
+
+
 """.data(using: .utf8)!
 
-let dictionary = try! JSONDecoder().decode([String:AnyDecodable].self, from: json)
-print(dictionary["foo"]?.value)
-
-
-
-
-
+let electricCar = try! JSONDecoder().decode(ElectricCar.self, from: json)
+electricCar.make
+electricCar.model
+electricCar.range
+electricCar.hasAutoPilot
 
 //import UIKit
 //

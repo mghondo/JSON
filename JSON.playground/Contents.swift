@@ -1,5 +1,13 @@
 import UIKit
 
+extension DateFormatter {
+    static let iso8601Full : DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        return formatter
+    }()
+}
+
 enum AddressType : String, Decodable {
     case apartment = "apartment"
     case house = "house"
@@ -24,6 +32,7 @@ struct Customer : Decodable {
     var firstName : String
     var lastName : String
     var address : Address
+    var dateCreated : Date
 }
 
 struct CustomerResponse : Decodable {
@@ -37,6 +46,7 @@ let json = """
         {
             "firstName" : "John",
             "lastName" : "Doe",
+            "dateCreated" : "05/09/2018",
             "address" : {
                 "street" : "1200 Richmond Ave",
                 "city" : "Houston",
@@ -53,12 +63,11 @@ let json = """
 
 """.data(using: .utf8)!
 
-let customersResponse = try! JSONDecoder().decode(CustomerResponse.self, from: json)
+let decoder = JSONDecoder()
+decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
 
-
-//print(customersResponse)
-print(customersResponse.customers[0].address.addressType.rawValue)
-
+let customerResponse = try! decoder.decode(CustomerResponse.self, from: json)
+print(customerResponse)
 
 
 

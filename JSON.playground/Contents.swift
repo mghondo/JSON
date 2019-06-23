@@ -25,10 +25,31 @@ struct User : Decodable {
     let name : String
     let userName : String
     let email : String
+    
     let street : String
     let suite : String
     let city : String
     let zipCode : String
+    
+    private enum UserKeys: String, CodingKey {
+        case id
+        case name
+        case userName = "username"
+        case email
+        
+    }
+    
+    init(from decoder : Decoder) throws {
+        let userContainer = try decoder.container(keyedBy: UserKeys.self)
+        
+        self.id = try userContainer.decode(Int.self, forKey: .id)
+        self.name = try userContainer.decode(String.self, forKey: .name)
+        self.userName = try userContainer.decode(String.self, forKey: .userName)
+        self.email = try userContainer.decode(String.self, forKey: .email)
+
+
+        
+    }
 }
 
 

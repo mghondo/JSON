@@ -13,6 +13,18 @@ struct Address: Decodable {
     let street: String
     let city: String
     let zipcode: String
+    
+    let geo: Geo
+}
+
+struct Geo : Decodable {
+    let latitude: String
+    let longitude: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case latitude = "lat"
+        case longitude = "lng"
+    }
 }
 
 let url = URL(string: "https://jsonplaceholder.typicode.com/users")!
@@ -29,6 +41,7 @@ URLSession.shared.dataTask(with: url) { data, response, error in
         print(users)
         print(users[0].email)
         print(users[3].address.street)
+        print(users[4].address.geo.latitude)
     }
     
 }.resume()
